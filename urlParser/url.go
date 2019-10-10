@@ -138,7 +138,7 @@ Loop:
 
 // setPrefix append the url prefix to the saved url.
 func (u *Url) SetPrefix() {
-	suffix := util.GetEnv("urlPath", "127.0.0.1:8000")
+	suffix := util.GetEnv("frontendUrl", "http://127.0.0.1:8080")
 	u.UrlShort = suffix + "/" + u.UrlShort
 	log.Printf("Short Url %s", u.UrlShort)
 }

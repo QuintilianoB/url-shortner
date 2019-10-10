@@ -20,25 +20,24 @@
         },
         methods: {
             submit() {
-                let data = {url: this.url}
-                this.axios.post('/create', data, {
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                }).then(response => {
-                    this.url_short = response.data.url_short
-                }).catch(error => {
-                    this.errors.push(error)
-                })
+                if (this.validURL(this.url)) {
+                    let data = {url: this.url};
+                    this.axios.post('/create', data, {
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                    }).then(response => {
+                        this.url_short = response.data.url_short
+                    }).catch(error => {
+                        this.errors.push(error)
+                    })
+                } else {
+                    alert("Invalid URL.")
+                }
             },
             validURL(myURL) {
-                let pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-                    '((([a-z\\d]([a-z\\d-][a-z\\d]))\\.?)+[a-z]{2,}|' + // domain name
-                    '((\\d{1,3}\\.){3}\\d{1,3}))' + // ip (v4) address
-                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+])' + //port
-                    '(\\?[;&amp;a-z\\d%_.~+=-]*)?' + // query string
-                    '(\\#[-a-z\\d_]*)?$', 'i');
-                return pattern.test(myURL);
+                let pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
+                return pattern.test(myURL)
             },
         }
     }
