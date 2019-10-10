@@ -48,7 +48,7 @@ func CreateUrl() http.HandlerFunc {
 /*
 	AccessUrl parses a request for a short URL and process it.
 	It expects a GET request in the route <ip>/{path} where path represents a short url created previously.
-	In case of a valid path, returns a 301 to the original URL.
+	In case of a valid path, returns a 200 and a JSON with to the original URL.
 */
 func AccessUrl() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -67,12 +67,14 @@ func AccessUrl() http.HandlerFunc {
 			util.SendError(w, http.StatusInternalServerError, err)
 		case nil:
 			url.RegisterAccess()
+			url.UrlShort = ""
+			util.SendSuccess(w, url)
 			/*
 				Which one is better?
 				301 - We give a permanent redirection and the client does no consume resources on the server as often.
 				302 - We ensure that every time that the client access the shortened URL we will register it.
-			 */
-			http.Redirect(w, r, url.Url, 302)
+			*/
+			//http.Redirect(w, r, url.Url, 302)
 		default:
 			util.SendError(w, http.StatusInternalServerError, nil)
 		}

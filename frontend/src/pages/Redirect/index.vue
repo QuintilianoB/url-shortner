@@ -16,7 +16,7 @@
         },
         created() {
             this.page = this.$route.params.page;
-            this.axios.get(this.page + "/stats")
+            this.axios.get(this.page)
                 .then(response => {
                     this.url = response.data.url;
                     this.url_short = response.data.url_short;

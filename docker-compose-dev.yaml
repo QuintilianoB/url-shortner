@@ -1,0 +1,26 @@
+version: '3'
+services:
+  #  signserver:
+  #    build:
+  #      context: .
+  #      dockerfile: Dockerfile
+  #    ports:
+  #      - "8000:8000"
+  #    depends_on:
+  #      - mysql
+  mysql:
+    image: mysql:5.7
+    environment:
+      - "MYSQL_ROOT_PASSWORD=metro-ag"
+      - "MYSQL_DATABASE=metro-ag"
+      - "MYSQL_USER=metro-ag"
+      - "MYSQL_PASSWORD=metro-ag"
+    ports:
+      - "3306:3306"
+  frontend:
+    image: node:alpine
+    command: sleep 300000
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./frontend:/frontend"

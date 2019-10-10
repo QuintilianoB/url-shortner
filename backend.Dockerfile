@@ -9,9 +9,10 @@ RUN GO111MODULE=on go get -d -v ./... \
 FROM golang:1.12-alpine3.9
 COPY --from=build /go/bin/app /go/app
 
-RUN apk update \
- && apk add mysql-client curl
+EXPOSE 8000/TCP
+
+RUN mkdir -p /go/store/sql/
+COPY .env /go/.env
+COPY store/sql/initial.sql /go/store/sql/initial.sql
 
 ENTRYPOINT ["/go/app"]
-
-EXPOSE 8000/TCP

@@ -1,13 +1,20 @@
 version: '3'
 services:
-#  signserver:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    ports:
-#      - "8000:8000"
-#    depends_on:
-#      - mysql
+  backend:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql:
+  frontend:
+    image: node:alpine
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    ports:
+      - "8080:8080"
   mysql:
     image: mysql:5.7
     environment:
@@ -17,10 +24,7 @@ services:
       - "MYSQL_PASSWORD=metro-ag"
     ports:
       - "3306:3306"
-  frontend:
-    image: node:alpine
-    command: sleep 300000
-    ports:
-      - "8080:8080"
-    volumes:
-      - "./frontend:/frontend"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
