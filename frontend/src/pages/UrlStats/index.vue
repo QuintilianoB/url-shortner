@@ -1,10 +1,8 @@
 <template>
     <div>
-        <p>{{page}}</p>
-        <p>{{url}}</p>
-        <p>{{url_short}}</p>
-        <p>{{qnt}}</p>
-        <p>{{stats}}</p>
+        <h1>Stats for {{url_short}}</h1>
+        <p>Original URL: {{url}}</p>
+        <p>Number of requests: {{qnt}}</p>
         <line-chart :discrete="true" :data=this.graphDt></line-chart>
     </div>
 </template>
@@ -32,12 +30,10 @@
                     this.stats = response.data.data;
                     this.stats.forEach(this.timeParse);
                     this.graphDt = JSON.parse(JSON.stringify(this.times));
-                }).catch(
-
-            )
+                })
         },
         methods: {
-            timeParse(item, index) {
+            timeParse(item) {
                 this.qnt += 1;
                 let date = new Date(item.time * 1000).toISOString();
                 if (date in this.times) {

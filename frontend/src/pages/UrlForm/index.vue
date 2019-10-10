@@ -1,8 +1,11 @@
 <template>
     <div>
+        <h1>Shortened URLs</h1>
+        <p>Only URLs with protocol are accepted.</p>
         <input type="text" v-model="url"/>
         <button @click="submit()">Submit</button>
-        <p>{{url_short}}</p>
+        <h3>Result</h3>
+        <a v-bind:href=url_short>{{url_short}}</a>
     </div>
 </template>
 
