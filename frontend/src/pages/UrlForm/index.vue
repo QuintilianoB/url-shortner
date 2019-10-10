@@ -21,7 +21,7 @@
         methods: {
             submit() {
                 let data = {url: this.url}
-                this.$axios.post('/create', data, {
+                this.axios.post('/create', data, {
                     headers: {
                         "Content-Type": "application/json"
                     },

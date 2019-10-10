@@ -6,16 +6,11 @@ import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false;
 
+Vue.use(VueAxios, axios)
+
+axios.defaults.baseURL = 'http://127.0.0.1:8000/'
+
 new Vue({
   router,
-  VueAxios,
-  axios,
   render: h => h(App),
 }).$mount('#app');
-
-const axiosConfig = {
-  baseURL: 'http://127.0.0.1:8000/',
-  timeout: 30000,
-};
-
-Vue.prototype.$axios = axios.create(axiosConfig);
